@@ -1,2 +1,5 @@
 venv/
 .idea/
+__pycache__/
+gpt/__pycache__/
+test.py
