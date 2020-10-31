@@ -3,6 +3,7 @@ from .embedding import tf, CombinedEncoding
 
 
 def GPT(model_configs):
+
     input_tensor = tf.keras.Input(shape=(model_configs['max_length']), dtype=tf.int32)
 
     x = CombinedEncoding(
