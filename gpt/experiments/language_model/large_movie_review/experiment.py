@@ -2,6 +2,7 @@ import tensorflow as tf
 from ....model import GPT
 from .inference import Predictor
 from ...pipeline import Experiment
+from .callbacks import InferenceCallback
 from .dataloader import IMDBReviewDataLoader
 
 
@@ -37,6 +38,17 @@ class IMDBReviewLanguageExperiment(Experiment):
                 learning_rate=learning_rate
             ), [self.loss_function, None]
         )
+
+    def train(self, epochs, start_tokens, max_length, max_tokens, top_k, infer_every=1):
+        if start_tokens is not None or max_length is not None or\
+                max_tokens is not None or top_k is not None or infer_every is not None:
+            inference_callback = InferenceCallback(
+                start_tokens=start_tokens, max_length=max_length,
+                max_tokens=max_tokens, top_k=top_k, infer_every=infer_every
+            )
+        history = self.model.fit(
+            self.dataset, epochs=epochs, callbacks=[inference_callback])
+        return history
 
     def _convert_vocab_to_dictionary(self):
         word_dictionary = {}
