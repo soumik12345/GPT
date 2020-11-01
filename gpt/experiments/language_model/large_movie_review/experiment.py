@@ -39,6 +39,11 @@ class IMDBReviewLanguageExperiment(Experiment):
             ), [self.loss_function, None]
         )
 
+    def tokenize(self, start_text):
+        start_tokens = [
+            self._convert_vocab_to_dictionary().get(_, 1) for _ in start_text.split()]
+        return start_tokens
+
     def train(self, epochs, start_tokens, max_length, max_tokens, top_k, infer_every=1):
         if start_tokens is not None or max_length is not None or\
                 max_tokens is not None or top_k is not None or infer_every is not None:
