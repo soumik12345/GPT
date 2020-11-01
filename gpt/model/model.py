@@ -19,7 +19,7 @@ def GPT(model_configs):
             feed_forward_dimension=model_configs['feed_forward_dimension']
         )(x)
 
-    output_tensor = tf.keras.layers.Dense(model_configs['vocab_size'])
+    output_tensor = tf.keras.layers.Dense(model_configs['vocab_size'])(x)
 
     model = tf.keras.Model(input_tensor, [output_tensor, x])
     return model

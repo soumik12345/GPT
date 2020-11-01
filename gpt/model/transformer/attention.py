@@ -64,7 +64,7 @@ class MultiHeadAttention(tf.keras.layers.Layer):
 
         attention_output, _ = attention(query, key, value)
         # (batch_size, sequence_length, num_heads, projection_dimension)
-        attention_output = tf.transpose(attention, perm=[0, 2, 1, 3])
+        attention_output = tf.transpose(attention_output, perm=[0, 2, 1, 3])
         # Join heads (batch_size, sequence_length, projection_dimension)
         attention_output = tf.reshape(
             attention_output, (batch_size, -1, self.embedding_dimension))

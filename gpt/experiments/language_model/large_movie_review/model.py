@@ -1,4 +1,5 @@
-from ....model import GPT, tf
+import tensorflow as tf
+from ....model import GPT
 from ...pipeline import Experiment
 from .dataloader import IMDBReviewDataLoader
 
