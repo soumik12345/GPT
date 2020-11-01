@@ -1,5 +1,6 @@
 import tensorflow as tf
 from ....model import GPT
+from .inference import Predictor
 from ...pipeline import Experiment
 from .dataloader import IMDBReviewDataLoader
 
@@ -36,3 +37,20 @@ class IMDBReviewLanguageExperiment(Experiment):
                 learning_rate=learning_rate
             ), [self.loss_function, None]
         )
+
+    def _convert_vocab_to_dictionary(self):
+        word_dictionary = {}
+        for index, word in enumerate(self.vocabulary):
+            word_dictionary[word] = index
+        return word_dictionary
+
+    def infer(self, start_tokens, max_length, max_tokens, top_k):
+        word_dictionary = self._convert_vocab_to_dictionary()
+        predictor = Predictor(
+            max_length=max_length, top_k=top_k,
+            word_dict=word_dictionary, max_tokens=max_tokens
+        )
+        prediction = predictor.predict(
+            model=self.model, start_tokens=start_tokens
+        )
+        return prediction

@@ -1,1 +1,1 @@
-from .model import IMDBReviewLanguageExperiment
+from .experiment import IMDBReviewLanguageExperiment
