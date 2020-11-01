@@ -4,10 +4,10 @@ from ...pipeline import Experiment
 from .dataloader import IMDBReviewDataLoader
 
 
-class IMDBReviewLanguageModel(Experiment):
+class IMDBReviewLanguageExperiment(Experiment):
 
     def __init__(self):
-        super(IMDBReviewLanguageModel, self).__init__()
+        super(IMDBReviewLanguageExperiment, self).__init__()
         self.dataset = None
         self.vocabulary = None
         self.model = None
