@@ -55,8 +55,9 @@ class IMDBReviewLanguageExperiment(Experiment):
                 max_tokens is not None or top_k is not None or infer_every is not None:
             callbacks.append(
                 InferenceCallback(
-                    start_tokens=start_tokens, max_length=max_length, max_tokens=max_tokens,
-                    top_k=top_k, infer_every=infer_every, word_dict=self.word_dictionary
+                    start_tokens=start_tokens, max_length=max_length,
+                    max_tokens=max_tokens, top_k=top_k, infer_every=infer_every,
+                    word_dict=self.word_dictionary, log_on_wandb=log_on_wandb
                 )
             )
         if log_on_wandb:
