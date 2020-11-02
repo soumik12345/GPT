@@ -12,6 +12,7 @@ class IMDBReviewLanguageExperiment(Experiment):
         super(IMDBReviewLanguageExperiment, self).__init__()
         self.dataset = None
         self.vocabulary = None
+        self.word_dictionary = {}
         self.model = None
         self.loss_function = None
 
@@ -21,6 +22,7 @@ class IMDBReviewLanguageExperiment(Experiment):
         print('Dataset Size: {} files'.format(len(loader)))
         self.dataset, self.vocabulary = loader.get_dataset()
         print('Dataset: {}'.format(self.dataset))
+        self._convert_vocab_to_dictionary()
 
     def compile(
             self, max_length=100, vocab_size=20000, depth=1, num_heads=2,
@@ -48,25 +50,21 @@ class IMDBReviewLanguageExperiment(Experiment):
         if start_tokens is not None or max_length is not None or\
                 max_tokens is not None or top_k is not None or infer_every is not None:
             inference_callback = InferenceCallback(
-                start_tokens=start_tokens, max_length=max_length,
-                max_tokens=max_tokens, top_k=top_k, infer_every=infer_every,
-                word_dict=self._convert_vocab_to_dictionary(),
+                start_tokens=start_tokens, max_length=max_length, max_tokens=max_tokens,
+                top_k=top_k, infer_every=infer_every, word_dict=self.word_dictionary
             )
         history = self.model.fit(
             self.dataset, epochs=epochs, callbacks=[inference_callback])
         return history
 
     def _convert_vocab_to_dictionary(self):
-        word_dictionary = {}
         for index, word in enumerate(self.vocabulary):
-            word_dictionary[word] = index
-        return word_dictionary
+            self.word_dictionary[word] = index
 
     def infer(self, start_tokens, max_length, max_tokens, top_k):
-        word_dictionary = self._convert_vocab_to_dictionary()
         predictor = Predictor(
             max_length=max_length, top_k=top_k,
-            word_dict=word_dictionary, max_tokens=max_tokens
+            word_dict=self.word_dictionary, max_tokens=max_tokens
         )
         prediction = predictor.predict(
             model=self.model, start_tokens=start_tokens
