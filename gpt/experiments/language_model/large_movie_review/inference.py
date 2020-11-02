@@ -41,6 +41,6 @@ class Predictor:
             start_tokens.append(sample_token)
             num_tokens_generated = len(tokens_generated)
         predicted_text = " ".join(
-            [self.decode(_) for _ in self.start_tokens + tokens_generated]
+            [self.decode(_) for _ in start_tokens + tokens_generated]
         )
         return predicted_text
