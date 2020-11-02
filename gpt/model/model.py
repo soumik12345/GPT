@@ -4,7 +4,10 @@ from .embedding import tf, CombinedEncoding
 
 def GPT(model_configs):
 
-    input_tensor = tf.keras.Input(shape=(model_configs['max_length']), dtype=tf.int32)
+    input_tensor = tf.keras.Input(
+        shape=(model_configs['max_length']),
+        dtype=tf.int32, name='GPT_Input'
+    )
 
     x = CombinedEncoding(
         max_length=model_configs['max_length'],
@@ -19,7 +22,12 @@ def GPT(model_configs):
             feed_forward_dimension=model_configs['feed_forward_dimension']
         )(x)
 
-    output_tensor = tf.keras.layers.Dense(model_configs['vocab_size'])(x)
+    output_tensor = tf.keras.layers.Dense(
+        model_configs['vocab_size'], name='GPT_Output'
+    )(x)
 
-    model = tf.keras.Model(input_tensor, [output_tensor, x])
+    model = tf.keras.Model(
+        input_tensor, [output_tensor, x],
+        name='GPT_depth_{}'.format(model_configs['depth'])
+    )
     return model
