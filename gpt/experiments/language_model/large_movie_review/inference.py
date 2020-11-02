@@ -19,7 +19,8 @@ class Predictor:
         return samples
 
     def decode(self, token):
-        return self.word_dict[token]
+        token_dict = {v: k for k, v in self.word_dict.items()}
+        return token_dict[token]
 
     def predict(self, model, start_tokens):
         start_tokens = [_ for _ in start_tokens]
