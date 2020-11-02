@@ -49,7 +49,8 @@ class IMDBReviewLanguageExperiment(Experiment):
                 max_tokens is not None or top_k is not None or infer_every is not None:
             inference_callback = InferenceCallback(
                 start_tokens=start_tokens, max_length=max_length,
-                max_tokens=max_tokens, top_k=top_k, infer_every=infer_every
+                max_tokens=max_tokens, top_k=top_k, infer_every=infer_every,
+                word_dict=self._convert_vocab_to_dictionary(),
             )
         history = self.model.fit(
             self.dataset, epochs=epochs, callbacks=[inference_callback])
