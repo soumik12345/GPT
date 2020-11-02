@@ -1,3 +1,5 @@
+import os
+import wandb
 import tensorflow as tf
 from ....model import GPT
 from .inference import Predictor
@@ -41,6 +43,7 @@ class IMDBReviewLanguageExperiment(Experiment):
                 learning_rate=learning_rate
             ), [self.loss_function, None]
         )
+        self.model.summary()
 
     def tokenize(self, start_text):
         start_tokens = [
@@ -61,7 +64,14 @@ class IMDBReviewLanguageExperiment(Experiment):
                 )
             )
         if log_on_wandb:
+            checkpoint_path = os.path.join(wandb.run.dir, 'gpt_language_model_checkpoint') + '{epoch}'
             callbacks.append(WandbCallback())
+            callbacks.append(
+                tf.keras.callbacks.ModelCheckpoint(
+                    filepath=checkpoint_path, save_weights_only=True,
+                    save_best_only=False, monitor='loss', verbose=1
+                )
+            )
         history = self.model.fit(
             self.dataset, epochs=epochs, callbacks=callbacks)
         return history
