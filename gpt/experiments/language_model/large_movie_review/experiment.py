@@ -43,7 +43,7 @@ class IMDBReviewLanguageExperiment(Experiment):
 
     def tokenize(self, start_text):
         start_tokens = [
-            self._convert_vocab_to_dictionary().get(_, 1) for _ in start_text.split()]
+            self.word_dictionary.get(_, 1) for _ in start_text.split()]
         return start_tokens
 
     def train(self, epochs, start_tokens, max_length, max_tokens, top_k, infer_every=1):
