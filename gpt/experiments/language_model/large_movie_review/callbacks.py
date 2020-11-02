@@ -26,7 +26,5 @@ class InferenceCallback(tf.keras.callbacks.Callback):
         print('\nSample Generate Text:', prediction)
         if self.log_on_wandb:
             wandb.log({
-                "custom_string": wandb.Html(
-                    'Generated Text (Epoch {}): {}'.format(epoch, prediction)
-                )
+                'Generated Text (Epoch {})'.format(epoch): wandb.Html(prediction)
             })
