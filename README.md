@@ -2,9 +2,13 @@
 
 Tensorflow implementation of Generative Pre-Training on GPT.
 
+![](./assets/gpt.png)
+
 # Experiments
 
 ## Language Model
+
+![](./assets/text_entailment.png)
 
 ```python
 from gpt.experiments.utils import init_wandb
