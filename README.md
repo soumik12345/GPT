@@ -7,9 +7,14 @@ Tensorflow implementation of Generative Pre-Training on GPT.
 ## Language Model
 
 ```python
+from gpt.experiments.utils import init_wandb
 from gpt.experiments.language_model import IMDBReviewLanguageExperiment
 
 experiment = IMDBReviewLanguageExperiment()
+init_wandb(
+    project_name='gpt', experiment_name='imdb_language_model',
+    wandb_api_key='69696969696969696969696969696969696969696'
+)
 experiment.build_dataset('https://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz')
 experiment.compile()
 start_text = 'the actor was'
