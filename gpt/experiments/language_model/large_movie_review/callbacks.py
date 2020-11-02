@@ -23,7 +23,7 @@ class InferenceCallback(tf.keras.callbacks.Callback):
         prediction = self.predictor.predict(
             model=self.model, start_tokens=self.start_tokens
         )
-        print('Sample Generate Text:', prediction)
+        print('\nSample Generate Text:', prediction)
         if self.log_on_wandb:
             wandb.log({
                 "custom_string": wandb.Html(
