@@ -1,5 +1,6 @@
 venv/
 .idea/
+.wandb/
 __pycache__/
 gpt/__pycache__/
 test.py

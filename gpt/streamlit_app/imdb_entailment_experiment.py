@@ -1,3 +1,4 @@
+import wandb
 import streamlit as st
 
 
@@ -17,6 +18,8 @@ def imdb_text_entailment_app_module():
             experiment_name=experiment_name,
             wandb_api_key=wandb_api_key
         )
+        wandb_url = str(wandb.run.url)
+        st.markdown('<a href="{}">{}</a>'.format(wandb_url, wandb_url), unsafe_allow_html=True)
         st.text_input('Done!!!')
 
     st.text('Fetching and Building IMDB Large Movie Review Dataset...')
